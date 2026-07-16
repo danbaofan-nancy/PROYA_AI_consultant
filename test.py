@@ -1,0 +1,1 @@
+print("This is an AI consultant. How can I assist you today?")
