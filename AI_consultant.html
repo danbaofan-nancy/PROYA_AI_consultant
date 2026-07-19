@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>珀莱雅 · AI功效护肤导购</title>
+    <!-- 字体 & 基础样式 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #faf7f5;
+            color: #1e1a18;
+            padding: 24px 16px 40px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 40px;
+            padding: 36px 32px 48px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.02);
+            backdrop-filter: blur(2px);
+            transition: all 0.2s;
+        }
+
+        /* 品牌头 */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 12px 0;
+            border-bottom: 1px solid #f0e8e2;
+            padding-bottom: 20px;
+        }
+
+        .brand h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            background: linear-gradient(135deg, #2c1f1a 0%, #7f5a4a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .brand .sub {
+            font-size: 14px;
+            color: #8a7a72;
+            font-weight: 400;
+            letter-spacing: 0.4px;
+            margin-top: 4px;
+        }
+
+        .badge {
+            background: #f2ebe7;
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #4e3d35;
+            border: 1px solid #e5dbd4;
+            backdrop-filter: blur(4px);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.01);
+        }
+
+        .badge i {
+            font-style: normal;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        /* 主输入区 */
+        .hero {
+            background: #f9f5f2;
+            border-radius: 28px;
+            padding: 28px 30px;
+            margin-bottom: 40px;
+            border: 1px solid #eee6e0;
+        }
+
+        .hero label {
+            font-weight: 600;
+            font-size: 17px;
+            color: #2b221e;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .hero label span {
+            font-weight: 400;
+            color: #8a7a72;
+            font-size: 15px;
+        }
+
+        .input-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .input-row input {
+            flex: 2;
+            min-width: 220px;
+            padding: 14px 20px;
+            border: 1px solid #ddd2ca;
+            border-radius: 100px;
+            font-size: 15px;
+            background: white;
+            outline: none;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .input-row input:focus {
+            border-color: #b39280;
+            box-shadow: 0 0 0 4px rgba(179, 146, 128, 0.12);
+        }
+
+        .input-row button {
+            padding: 14px 32px;
+            background: #1e1a18;
+            color: white;
+            border: none;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+        }
+
+        .input-row button:hover {
+            background: #3a2d26;
+            transform: scale(0.98);
+        }
+
+        .input-row button:active {
+            background: #0f0c0a;
+        }
+
+        /* 结果卡片网格 */
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 700px) {
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 24px 16px;
+            }
+            .hero {
+                padding: 20px 18px;
+            }
+        }
+
+        .card {
+            background: #fcfaf8;
+            border-radius: 28px;
+            padding: 22px 24px 26px;
+            border: 1px solid #ede6e0;
+            transition: 0.15s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2b221e;
+            letter-spacing: -0.2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            border-bottom: 1px dashed #e2d7cf;
+            padding-bottom: 12px;
+        }
+
+        .card-title .emoji {
+            font-size: 20px;
+        }
+
+        /* 产品推荐卡片 (全宽) */
+        .product-highlight {
+            background: #f3ede9;
+            border-radius: 24px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            border-left: 6px solid #b39280;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-highlight .name {
+            font-weight: 700;
+            font-size: 22px;
+            color: #1e1a18;
+        }
+
+        .product-highlight .tag {
+            background: white;
+            padding: 6px 18px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #4e3d35;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .product-highlight .desc {
+            width: 100%;
+            margin-top: 8px;
+            color: #4f3f36;
+            font-size: 15px;
+        }
+
+        /* 评价列表 */
+        .review-item {
+            background: white;
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border: 1px solid #efe8e2;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .review-item .meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #6f5e54;
+        }
+
+        .review-item .meta .badge-type {
+            background: #f0ebe7;
+            padding: 2px 12px;
+            border-radius: 100px;
+            font-weight: 500;
+            font-size: 12px;
+        }
+
+        .review-item .meta .badge-type.pos {
+            background: #e6f0ea;
+            color: #1f6e4a;
+        }
+
+        .review-item .meta .badge-type.neg {
+            background: #f4e8e6;
+            color: #a45343;
+        }
+
+        .review-item .text {
+            color: #1e1a18;
+        }
+
+        .review-item .source {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #9a8980;
+        }
+
+        .ingredient-item {
+            background: white;
+            border-radius: 16px;
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            border: 1px solid #efe8e2;
+        }
+
+        .ingredient-item .ing-name {
+            font-weight: 600;
+            color: #2b221e;
+        }
+
+        .ingredient-item .ing-func {
+            color: #4f3f36;
+            font-size: 14px;
+            margin: 4px 0 2px;
+        }
+
+        .ingredient-item .ing-skin {
+            font-size: 13px;
+            color: #7a675c;
+            background: #f5efeb;
+            display: inline-block;
+            padding: 2px 14px;
+            border-radius: 100px;
+            margin-top: 4px;
+        }
+
+        .footnote {
+            margin-top: 32px;
+            font-size: 13px;
+            color: #b3a39a;
+            border-top: 1px solid #ede6e0;
+            padding-top: 24px;
+            text-align: center;
+            letter-spacing: 0.2px;
+        }
+
+        .footnote strong {
+            color: #5f4d42;
+            font-weight: 500;
+        }
+
+        /* 空状态/占位 */
+        .empty-state {
+            color: #b3a39a;
+            font-size: 14px;
+            padding: 12px 0 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="container" id="app">
+
+    <!-- 头部 -->
+    <div class="header">
+        <div class="brand">
+            <h1>🧪 珀莱雅 · 功效护肤导购</h1>
+            <div class="sub">AI 护肤灵感 · 科学解读 · 真实评价</div>
+        </div>
+        <div class="badge">
+            <i>✨</i> 科技美妆 · 灵感共创
+        </div>
+    </div>
+
+    <!-- 输入区 -->
+    <div class="hero">
+        <label for="skinInput">描述你的皮肤困扰 <span>— 比如“换季泛红起皮，干性敏感”</span></label>
+        <div class="input-row">
+            <input type="text" id="skinInput" placeholder="例如：脸颊泛红、熬夜暗沉、有干纹..." value="换季泛红起皮，脸颊敏感，偏干">
+            <button id="searchBtn">🔍 生成灵感</button>
+        </div>
+        <div style="margin-top: 12px; font-size: 14px; color: #9a8980; display: flex; gap: 16px; flex-wrap: wrap;">
+            <span>💡 试试：<span style="cursor:pointer; color:#6f5e54; font-weight:500;" onclick="document.getElementById('skinInput').value='熬夜暗黄，有细纹，混油皮'; document.getElementById('searchBtn').click();">熬夜暗黄 · 混油</span></span>
+            <span>💡 <span style="cursor:pointer; color:#6f5e54; font-weight:500;" onclick="document.getElementById('skinInput').value='皮肤松弛，法令纹明显，干皮'; document.getElementById('searchBtn').click();">抗老紧致 · 干皮</span></span>
+        </div>
+    </div>
+
+    <!-- 结果区域：动态渲染 -->
+    <div id="resultArea">
+        <!-- 默认展示示例数据 (即初始加载时自动渲染) -->
+    </div>
+
+    <div class="footnote">
+        <strong>🧬 功效护肤导购 · MVP</strong>  —  数据为示例，基于真实产品与成分知识库 · 正负面评价来自天猫/小红书聚合
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- 模拟数据库 (复制粘贴即可扩展) ----------
+        const PRODUCT_DB = {
+            "双抗精华3.0": {
+                name: "双抗精华3.0",
+                tag: "抗氧 · 抗糖 · 去黄",
+                desc: "针对熬夜暗沉、肤色黄气，麦角硫因+虾青素协同抗氧，脱羧肌肽根源抗糖。",
+                ingredients: [
+                    { name: "麦角硫因", func: "高效抗氧化，清除自由基，提亮肤色", skin: "所有肤质，尤其暗沉肌" },
+                    { name: "虾青素", func: "强效抗氧，改善暗黄，增强皮肤光泽", skin: "所有肤质" },
+                    { name: "脱羧肌肽", func: "抗糖化，阻断AGEs生成，预防黄化", skin: "暗黄、初老肌" }
+                ],
+                reviews: {
+                    positive: [
+                        { text: "用了两周，熬夜后的黄气明显少了，肤色透亮了很多，混油皮也不黏腻。", source: "天猫 · 混油皮" },
+                        { text: "性价比很高，去黄效果肉眼可见，皮肤变得很细腻，会回购。", source: "小红书 · 干皮" }
+                    ],
+                    negative: [
+                        { text: "可能太控油了，我这个大干皮用着有点拔干，需要叠加保湿精华。", source: "天猫 · 干敏皮" },
+                        { text: "效果没有吹的那么神，去黄一般般，没有明显提亮。", source: "小红书 · 油皮" }
+                    ]
+                }
+            },
+            "红宝石精华3.0": {
+                name: "红宝石精华3.0",
+                tag: "抗皱 · 淡纹 · 紧致",
+                desc: "专利环肽-161+超分子A醇，精准淡纹，搭配六胜肽紧致轮廓，温和抗老。",
+                ingredients: [
+                    { name: "环肽-161", func: "专利抗老成分，促进胶原新生，淡化动态纹", skin: "所有肤质，尤其熟龄肌" },
+                    { name: "超分子A醇", func: "高效抗皱，促进细胞更新，紧致皮肤", skin: "耐受肌，敏感肌需建立耐受" },
+                    { name: "乙酰基六肽-1", func: "抑制肌肉收缩，改善表情纹、鱼尾纹", skin: "所有肤质" }
+                ],
+                reviews: {
+                    positive: [
+                        { text: "法令纹真的变淡了，皮肤变得紧致，混干皮用着很舒服，不刺激。", source: "天猫 · 混干皮" },
+                        { text: "用了一个月，脸颊的毛孔也细了，A醇很温和，没有脱皮。", source: "小红书 · 混油皮" }
+                    ],
+                    negative: [
+                        { text: "敏感肌还是有点刺痛，可能A醇浓度对我太高了，需要建立耐受。", source: "天猫 · 敏感肌" },
+                        { text: "质地偏厚重，油皮夏天用着有点闷痘，秋冬更合适。", source: "小红书 · 油皮" }
+                    ]
+                }
+            },
+            "源力精华3.0": {
+                name: "源力精华3.0",
+                tag: "修护 · 褪红 · 屏障强韧",
+                desc: "XVII型重组胶原蛋白直补基底膜，炎症消退素主动退炎，强韧屏障。",
+                ingredients: [
+                    { name: "XVII型重组胶原蛋白", func: "基底膜修护，促进胶原新生，强韧屏障", skin: "敏感肌、屏障受损" },
+                    { name: "炎症消退素", func: "主动消退炎症，减少泛红，舒缓刺痛", skin: "泛红、敏感肌" },
+                    { name: "神经酰胺NP", func: "补充角质层脂质，修护屏障，锁水保湿", skin: "干性、敏感肌" }
+                ],
+                reviews: {
+                    positive: [
+                        { text: "换季泛红起皮全靠它，用了三天就稳定了，干敏皮无限回购。", source: "天猫 · 干敏皮" },
+                        { text: "褪红效果绝了，脸颊的红痘印也淡了很多，质地很清爽。", source: "小红书 · 油敏皮" }
+                    ],
+                    negative: [
+                        { text: "保湿力一般，大干皮冬天需要叠加面霜，单用不够润。", source: "天猫 · 干皮" },
+                        { text: "修护效果对我不是很起效，可能我的屏障受损太严重了。", source: "小红书 · 敏感肌" }
+                    ]
+                }
+            }
+        };
+
+        // 默认推荐映射 (基于关键词)
+        function matchProduct(query) {
+            const q = query.toLowerCase();
+            if (q.includes('泛红') || q.includes('敏感') || q.includes('修护') || q.includes('屏障') || q.includes('起皮')) {
+                return '源力精华3.0';
+            } else if (q.includes('暗黄') || q.includes('熬夜') || q.includes('去黄') || q.includes('暗沉') || q.includes('提亮')) {
+                return '双抗精华3.0';
+            } else if (q.includes('细纹') || q.includes('皱纹') || q.includes('紧致') || q.includes('抗老') || q.includes('法令纹') || q.includes('松弛')) {
+                return '红宝石精华3.0';
+            } else {
+                // 默认推荐源力 (温和)
+                return '源力精华3.0';
+            }
+        }
+
+        // 渲染函数
+        function renderResult(query) {
+            const productKey = matchProduct(query);
+            const product = PRODUCT_DB[productKey];
+            if (!product) return;
+
+            const area = document.getElementById('resultArea');
+            if (!area) return;
+
+            // 生成正负面评价html
+            const posReviews = product.reviews.positive.map(r => 
+                `<div class="review-item">
+                    <div class="meta"><span class="badge-type pos">👍 正面</span><span>${r.source}</span></div>
+                    <div class="text">“${r.text}”</div>
+                </div>`
+            ).join('');
+
+            const negReviews = product.reviews.negative.map(r => 
+                `<div class="review-item">
+                    <div class="meta"><span class="badge-type neg">👎 负面</span><span>${r.source}</span></div>
+                    <div class="text">“${r.text}”</div>
+                </div>`
+            ).join('');
+
+            // 成分解读
+            const ingHtml = product.ingredients.map(ing => 
+                `<div class="ingredient-item">
+                    <div class="ing-name">🧪 ${ing.name}</div>
+                    <div class="ing-func">${ing.func}</div>
+                    <div class="ing-skin">👤 ${ing.skin}</div>
+                </div>`
+            ).join('');
+
+            const html = `
+                <!-- 产品推荐卡 -->
+                <div class="product-highlight">
+                    <div>
+                        <div class="name">✨ ${product.name}</div>
+                        <div style="margin-top: 4px; display: flex; gap: 8px; flex-wrap: wrap;">
+                            <span class="tag">${product.tag}</span>
+                            <span style="font-size:14px; color:#5f4d42;">基于肤质与痛点匹配</span>
+                        </div>
+                        <div class="desc">${product.desc}</div>
+                    </div>
+                    <div style="background: white; padding: 6px 18px; border-radius: 100px; font-size: 14px; font-weight: 500; color:#4e3d35; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
+                        ⚡ 推荐匹配
+                    </div>
+                </div>
+
+                <div class="result-grid">
+                    <!-- 左列：评价 -->
+                    <div class="card">
+                        <div class="card-title"><span class="emoji">📝</span> 真实用户评价 · 同肤质</div>
+                        <div style="max-height: 320px; overflow-y: auto; padding-right: 4px;">
+                            ${posReviews}
+                            ${negReviews}
+                            ${!posReviews && !negReviews ? '<div class="empty-state">暂无该肤质评价数据</div>' : ''}
+                        </div>
+                        <div style="margin-top: 12px; font-size: 13px; color: #9a8980; background: #f5efeb; padding: 8px 14px; border-radius: 20px;">
+                            ⚡ 基于天猫/小红书真实评论聚合
+                        </div>
+                    </div>
+
+                    <!-- 右列：成分解读 -->
+                    <div class="card">
+                        <div class="card-title"><span class="emoji">🔬</span> 核心成分 · 透明解读</div>
+                        <div style="max-height: 320px; overflow-y: auto; padding-right: 4px;">
+                            ${ingHtml}
+                            <div style="margin-top: 14px; background: #f4f0ec; border-radius: 16px; padding: 14px 16px; font-size: 14px; color: #4f3f36; border-left: 3px solid #b39280;">
+                                <strong>💡 为什么透明？</strong> 珀莱雅坚持科学护肤，成分经临床验证，拒绝概念添加。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 适配提示 -->
+                <div style="margin-top: 18px; background: #f2f0ed; border-radius: 20px; padding: 12px 20px; font-size: 14px; color: #4f3f36; display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+                    <span style="font-weight: 500;">🧴 搭配建议：</span>
+                    <span>根据肤质可搭配同系列水乳，干皮建议叠加保湿面霜，油皮可单用精华。</span>
+                </div>
+            `;
+
+            area.innerHTML = html;
+        }
+
+        // 初次加载 + 按钮事件
+        function init() {
+            const btn = document.getElementById('searchBtn');
+            const input = document.getElementById('skinInput');
+
+            // 初始渲染（默认值）
+            renderResult(input.value || '换季泛红起皮，脸颊敏感');
+
+            btn.addEventListener('click', function() {
+                const val = input.value.trim();
+                if (val === '') {
+                    alert('请描述你的皮肤问题，例如：脸颊泛红、熬夜暗沉');
+                    return;
+                }
+                renderResult(val);
+            });
+
+            // 回车触发
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    btn.click();
+                }
+            });
+        }
+
+        // 确保DOM加载完成
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+</script>
+
+</body>
+</html>
